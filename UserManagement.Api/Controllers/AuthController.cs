@@ -11,24 +11,29 @@ namespace UserManagement.Api.Controllers
     {
         private readonly UserService _userService;
         private readonly JwtService _jwtService;
+        private readonly LoginAttemptService _loginAttemptService;
 
-        public AuthController(UserService userService, JwtService jwtService)
+        public AuthController(UserService userService, JwtService jwtService, LoginAttemptService loginAttemptService)
         {
             _userService = userService;
             _jwtService = jwtService;
+            _loginAttemptService = loginAttemptService;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var key = dto.Email + "|" + HttpContext.Connection.RemoteIpAddress?.ToString();
-        
+
             var user = await _userService.GetUserByEmail(dto.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
-                return Unauthorized("Invalid credentials");
+            {
+                _loginAttemptService.RegisterFailedAttempt(key);
+                return Unauthorized("Credenciales inválidas");
+            }
 
-            _loginAttemptService.ResetAttempts(key); // Reiniciar intentos tras éxito
-            
+            _loginAttemptService.ResetAttempts(key);
+
             var token = _jwtService.GenerateToken(user.Email);
             return Ok(new { Token = token });
         }
@@ -38,7 +43,7 @@ namespace UserManagement.Api.Controllers
         {
             var hashedPass = BCrypt.Net.BCrypt.HashPassword(dto.Password);
             await _userService.RegisterUser(dto.Username, dto.Email, hashedPass);
-            return Ok(new { Message = "User created" });
+            return Ok(new { Message = "Usuario creado correctamente" });
         }
     }
 }
