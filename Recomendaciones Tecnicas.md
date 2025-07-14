@@ -1,4 +1,5 @@
-Seguridad
+📋 RECOMENDACIONES TÉCNICAS
+🔐 Seguridad
 JWT Expiración : Limitar vida útil del token (ej: 1 hora).
 Renovación de tokens : Agregar refresh token si es necesario.
 CSRF Protection : Usar tokens CSRF si se usan formularios dinámicos.
