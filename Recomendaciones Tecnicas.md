@@ -12,6 +12,7 @@ No guardar tokens en logs : Evitar registrar JWT o contraseñas.
 ⚙️ Escalabilidad
 
 Para soportar más de 100 usuarios concurrentes:
+
 Usar balanceador de carga (Nginx, HAProxy)
 Implementar caché (Redis) para sesiones
 Usar contenedores (Docker) y orquestación (Kubernetes)
