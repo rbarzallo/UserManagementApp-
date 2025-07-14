@@ -21,10 +21,14 @@ namespace UserManagement.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
+            var key = dto.Email + "|" + HttpContext.Connection.RemoteIpAddress?.ToString();
+        
             var user = await _userService.GetUserByEmail(dto.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 return Unauthorized("Invalid credentials");
 
+            _loginAttemptService.ResetAttempts(key); // Reiniciar intentos tras éxito
+            
             var token = _jwtService.GenerateToken(user.Email);
             return Ok(new { Token = token });
         }
