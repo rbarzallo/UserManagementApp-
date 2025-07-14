@@ -1,3 +1,5 @@
+// En tu controlador, puedes ahora usar el atributo [Authorize] para restringir el acceso solo a usuarios autenticados.
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
