@@ -45,6 +45,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddSingleton<UserService>();
 
+// Registro del servicio
+builder.Services.AddSingleton<LoginAttemptService>();
+
+// Registro del middleware
+app.UseMiddleware<BruteForceProtectionMiddleware>();
+
 // Habilitar CORS en tu API
 // Asegúrate de agregar esto en Program.cs para permitir el acceso desde el frontend:
 
