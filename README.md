@@ -1,5 +1,3 @@
-# UserManagementApp-
-Ejemplo con QWEN
 # User Management App - MVC con .NET Core
 
 ## Descripción
@@ -10,4 +8,14 @@ Aplicación web completa que permite la gestión de usuarios con autenticación 
 - **Autenticación:** JWT + OTP
 - **Herramientas:** Serilog, Swagger
 
-## Estructura del Proyecto
+## Requisitos previos
+- .NET Core 6 SDK
+- SQL Server (Express o Developer Edition)
+- Visual Studio Code / Visual Studio
+- Navegador moderno
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/rbarzallo/UserManagementApp- 
